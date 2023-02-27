@@ -40,6 +40,13 @@ var baseUri = Resource.GetString(Resource.StringResources.storageAccountBaseUri)
 
 var digiCertGlobalRootG2 = new X509Certificate(Resource.GetBytes(Resource.BinaryResources.DigiCertGlobalRootG2));
 
+// HTTP client is meant to have a single instance throughout the app life cycle 
+var httpClient = new HttpClient
+{
+    SslProtocols = SslProtocols.Tls12,
+    HttpsAuthentCert = digiCertGlobalRootG2,
+};
+
 foreach (var fileName in fileNames)
 {
     nanoFramework.Runtime.Native.GC.EnableGCMessages(true);
@@ -49,12 +56,6 @@ foreach (var fileName in fileNames)
 
     try
     {
-        var httpClient = new HttpClient
-        {
-            SslProtocols = SslProtocols.Tls12,
-            HttpsAuthentCert = digiCertGlobalRootG2,
-        };
-
         var address = $"{baseUri}{fileName}{token}";
         var result = httpClient.Get(address);
         result.EnsureSuccessStatusCode();
@@ -62,8 +63,6 @@ foreach (var fileName in fileNames)
         using var fs = new FileStream($"I:\\{fileName}", FileMode.Create, FileAccess.ReadWrite);
         result.Content.ReadAsStream().CopyTo(fs);
         fs.Flush();
-        fs.Close();
-        fs.Dispose();
 
         Trace($"Successfully fetched and saved file with name: {fileName}");
     }
