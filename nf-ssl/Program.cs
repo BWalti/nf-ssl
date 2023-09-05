@@ -38,7 +38,7 @@ var fileNames = storageAccountFileNames.Split(';');
 // fetch baseUri:
 var baseUri = Resource.GetString(Resource.StringResources.storageAccountBaseUri);
 
-var digiCertGlobalRootG2 = new X509Certificate(Resource.GetBytes(Resource.BinaryResources.DigiCertGlobalRootG2));
+var digiCertGlobalRootG2 = new X509Certificate(Resource.GetString(Resource.StringResources.AzureRootCerts));
 
 foreach (var fileName in fileNames)
 {

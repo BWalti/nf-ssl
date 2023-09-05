@@ -29,21 +29,13 @@ namespace nf_ssl
         {
             return ((string)(nanoFramework.Runtime.Native.ResourceUtility.GetObject(ResourceManager, id)));
         }
-        internal static byte[] GetBytes(Resource.BinaryResources id)
-        {
-            return ((byte[])(nanoFramework.Runtime.Native.ResourceUtility.GetObject(ResourceManager, id)));
-        }
         [System.SerializableAttribute()]
         internal enum StringResources : short
         {
+            AzureRootCerts = -6742,
             storageAccountBaseUri = -3428,
             storageAccountToken = 5460,
             storageAccountFileNames = 16040,
-        }
-        [System.SerializableAttribute()]
-        internal enum BinaryResources : short
-        {
-            DigiCertGlobalRootG2 = 26599,
         }
     }
 }
